@@ -1,0 +1,31 @@
+{% extends 'default.html' %}
+
+{% load custom_filters %} 
+ 
+{% block title %}
+Наши новости
+{% endblock title %}
+ 
+{% block content %}
+    {% if newslist %} <!-- Выводим news только если они есть -->
+    <h1>Список новостей ({{newslist | length}} публикаций):</h1>
+    <hr>
+    <table>
+        {% for news in newslist %}
+        <h3>
+            <a href="{{news.id}}">  <!-- заголовок статьи - гиперссылка на страницу со статьёй -->
+                {{news.chapter | censor}} 
+            </a>
+
+        <!-- </h3> <p>(дата публикации: {{news.time_in | date:'d M Y'}})</p> -->
+        <p>
+            {{news.text | truncatechars:51 | censor}}
+        </p>
+
+        
+        {%endfor%}
+    {% else %} <!-- Если news нет, то говорим что news нет ;) -->
+        <h2>Новостей пока нет!</h2>
+    {% endif %}
+    
+{% endblock content %}
